@@ -8,6 +8,10 @@ task_python="${PYTHON_BIN:-python3}"
 "$task_python" scripts/check_submission.py
 account_name="$(gh api user --jq .login)"
 
+# Use the authenticated GitHub CLI for HTTPS, only in this repository.
+git config --local --replace-all credential.https://github.com.helper ''
+git config --local --add credential.https://github.com.helper '!gh auth git-credential'
+
 # Resolve the account before committing the public download URLs.
 "$task_python" - "$account_name" "$repo_name" <<'PY'
 from pathlib import Path
@@ -39,5 +43,26 @@ else
     --title "Cats diffusion: EMA checkpoint at 10,000 updates" \
     --notes "EMA weights for the 128px U-Net used in the README sampling comparison. SHA256 is recorded in results/checkpoint.json."
 fi
+
+asset_bytes="$(gh api "repos/$account_name/$repo_name/releases/tags/$release_tag" \
+  --jq '.assets[] | select(.name == "cats128-step10000.pt") | .size')"
+"$task_python" - "$account_name" "$repo_name" "$asset_bytes" <<'PY'
+from pathlib import Path
+import json
+import subprocess
+import sys
+weights = Path("checkpoints/cats128-step10000.pt")
+if int(sys.argv[3]) != weights.stat().st_size:
+    raise SystemExit("Release asset size does not match the local checkpoint")
+metadata = json.loads(Path("results/checkpoint.json").read_text())
+record = {
+    "repository": f"https://github.com/{sys.argv[1]}/{sys.argv[2]}",
+    "release": f"https://github.com/{sys.argv[1]}/{sys.argv[2]}/releases/tag/submission-v1",
+    "commit": subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
+    "checkpoint_sha256": metadata["sha256"],
+    "asset_bytes": int(sys.argv[3]),
+}
+Path("checkpoints/publication.json").write_text(json.dumps(record, indent=2))
+PY
 
 printf 'Published: https://github.com/%s/%s\n' "$account_name" "$repo_name"
