@@ -1,17 +1,16 @@
 {
-  "unit_tests": {
-    "passed": 14,
-    "failed": 0
-  },
   "checkpoint": {
+    "optimizer_updates": 50000,
+    "ema_parameters": 78642819,
     "weights_only_load": true,
+    "matches_training_config_and_dataset": true,
     "real_cpu_ddim_transitions": 2,
     "images": 1
   },
-  "nearest_train_regression": {
-    "pairs": 16,
-    "identical_nearest_files_and_flips": true,
-    "max_rgb_mse_change": 1.4901161193847656e-08
+  "training": {
+    "updates": 50000,
+    "validation_evaluations": 25,
+    "status": "complete"
   },
   "dataset": {
     "prepared_images_checked_against_manifest": 5065,
@@ -23,6 +22,12 @@
     "repeats_per_method": 3,
     "methods": 6
   },
+  "nearest_train": {
+    "checkpoint_updates": 50000,
+    "generated_tiles_per_method": 16,
+    "train_bank": 4559,
+    "horizontal_flips_included": true
+  },
   "video": {
     "codec": "h264",
     "pixel_format": "yuv420p",
@@ -30,5 +35,9 @@
     "height": 306,
     "seconds": 9.69
   },
-  "readme_relative_links": "checked by scripts/check_submission.py"
+  "readme_relative_links": "checked by scripts/check_submission.py",
+  "unit_tests": {
+    "passed": 14,
+    "failed": 0
+  }
 }

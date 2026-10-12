@@ -25,11 +25,11 @@ def sha256(path):
 
 
 def validate(directory, config_path=None, manifest_path=None,
-             comparison_name="submission-comparison", validation_every=1000):
+             comparison_name="submission-comparison", validation_every=1000, updates=10000):
     config_path = config_path or ROOT / "configs/train.yaml"
     manifest_path = manifest_path or ROOT / "data/cats/manifest.json"
     expected = ["train.csv", "validation.csv", "summary.json", "config.yaml", "environment.json",
-                "split.json", "events.jsonl", "training-dashboard.png", "step-0010000.pt",
+                "split.json", "events.jsonl", "training-dashboard.png", f"step-{updates:07d}.pt",
                 f"{comparison_name}/timings.json", f"{comparison_name}/timings.csv",
                 f"{comparison_name}/contact-sheet.png", f"{comparison_name}/speed.png",
                 f"{comparison_name}/demo.gif"]
@@ -49,18 +49,20 @@ def validate(directory, config_path=None, manifest_path=None,
         raise ValueError("Pod dataset differs from the images included in the repository")
     if timings["precision"] != "float32" or timings["ddim_eta"] != 0 or timings["seed"] != 2026:
         raise ValueError("Benchmark precision, DDIM eta or seed differs from the reported setup")
-    if (summary["updates"], timings["optimizer_updates"], summary["parameters"]) != (10000, 10000, 78642819):
-        raise ValueError("Expected the 78.6M-parameter checkpoint at 10,000 optimizer updates")
-    checkpoint_sha = sha256(directory / "step-0010000.pt")
+    if (summary["updates"], timings["optimizer_updates"], summary["parameters"]) != (updates, updates, 78642819):
+        raise ValueError(f"Expected the 78.6M-parameter checkpoint at {updates:,} optimizer updates")
+    if updates == config["training"]["max_updates"] and summary["status"] != "complete":
+        raise ValueError("Expected completed training at the configured update limit")
+    checkpoint_sha = sha256(directory / f"step-{updates:07d}.pt")
     if checkpoint_sha != timings["checkpoint_sha256"]:
         raise ValueError("Benchmark checkpoint SHA256 does not match the provided weights")
     with (directory / "train.csv").open(newline="") as handle:
         training = list(csv.DictReader(handle))
     with (directory / "validation.csv").open(newline="") as handle:
         validation = list(csv.DictReader(handle))
-    if [int(r["step"]) for r in training] != list(range(1, 10001)):
-        raise ValueError("Expected complete training history from updates 1 through 10,000")
-    if [int(r["step"]) for r in validation] != list(range(validation_every, 10001, validation_every)):
+    if [int(r["step"]) for r in training] != list(range(1, updates + 1)):
+        raise ValueError(f"Expected complete training history from updates 1 through {updates:,}")
+    if [int(r["step"]) for r in validation] != list(range(validation_every, updates + 1, validation_every)):
         raise ValueError("Validation history does not match the experiment")
     for rows in (training, validation):
         if any(not math.isfinite(float(value)) for row in rows for value in row.values()):

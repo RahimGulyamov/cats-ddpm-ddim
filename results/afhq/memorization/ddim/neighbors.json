@@ -1,107 +1,107 @@
 {
-  "source_grid": "results/afhq/training/previews/step-0010000-ddim.png",
+  "source_grid": "results/afhq/training/previews/step-0050000-ddim.png",
   "dataset_sha256": "c91e0118c8d8b54b691fb546b3184a19be8b0c7b6b639a0d64ce866a04f0ac3a",
   "train_count": 4559,
   "generated_count": 16,
   "normalization": "RGB in [-1,1]; native preview quantized to uint8",
-  "median_nearest_train_rgb_mse": 0.1794922575354576,
+  "median_nearest_train_rgb_mse": 0.16312851011753082,
   "limitations": "Pixel proximity supports visual inspection; no copy threshold or FID. Colors and alignment affect distances. Both original and flipped train images checked.",
   "pairs": [
     {
       "tile": 1,
       "train_file": "cat_02098.png",
       "horizontal_flip": true,
-      "rgb_mse": 0.18519604206085205
+      "rgb_mse": 0.18310336768627167
     },
     {
       "tile": 2,
       "train_file": "cat_05050.png",
       "horizontal_flip": false,
-      "rgb_mse": 0.1846574991941452
+      "rgb_mse": 0.1618553251028061
     },
     {
       "tile": 3,
-      "train_file": "cat_01350.png",
+      "train_file": "cat_00939.png",
       "horizontal_flip": false,
-      "rgb_mse": 0.17801892757415771
+      "rgb_mse": 0.17544470727443695
     },
     {
       "tile": 4,
-      "train_file": "cat_02433.png",
+      "train_file": "cat_05060.png",
       "horizontal_flip": false,
-      "rgb_mse": 0.11120358109474182
+      "rgb_mse": 0.09648364782333374
     },
     {
       "tile": 5,
-      "train_file": "cat_03587.png",
+      "train_file": "cat_03441.png",
       "horizontal_flip": false,
-      "rgb_mse": 0.2682500183582306
+      "rgb_mse": 0.2362397164106369
     },
     {
       "tile": 6,
-      "train_file": "cat_03850.png",
+      "train_file": "cat_02560.png",
       "horizontal_flip": false,
-      "rgb_mse": 0.2179776430130005
+      "rgb_mse": 0.16440169513225555
     },
     {
       "tile": 7,
       "train_file": "cat_01926.png",
       "horizontal_flip": false,
-      "rgb_mse": 0.14450760185718536
+      "rgb_mse": 0.12852920591831207
     },
     {
       "tile": 8,
       "train_file": "cat_05035.png",
       "horizontal_flip": true,
-      "rgb_mse": 0.1809655874967575
+      "rgb_mse": 0.16889910399913788
     },
     {
       "tile": 9,
-      "train_file": "cat_00442.png",
+      "train_file": "cat_03593.png",
       "horizontal_flip": false,
-      "rgb_mse": 0.23086844384670258
+      "rgb_mse": 0.21435141563415527
     },
     {
       "tile": 10,
-      "train_file": "cat_01795.png",
+      "train_file": "cat_03462.png",
       "horizontal_flip": true,
-      "rgb_mse": 0.19380219280719757
+      "rgb_mse": 0.17590515315532684
     },
     {
       "tile": 11,
-      "train_file": "cat_03491.png",
+      "train_file": "cat_01547.png",
       "horizontal_flip": true,
-      "rgb_mse": 0.0883842185139656
+      "rgb_mse": 0.10349424928426743
     },
     {
       "tile": 12,
-      "train_file": "cat_03585.png",
+      "train_file": "cat_01382.png",
       "horizontal_flip": false,
-      "rgb_mse": 0.13800573348999023
+      "rgb_mse": 0.1342267245054245
     },
     {
       "tile": 13,
       "train_file": "cat_04350.png",
       "horizontal_flip": false,
-      "rgb_mse": 0.25824570655822754
+      "rgb_mse": 0.22080586850643158
     },
     {
       "tile": 14,
-      "train_file": "cat_03979.png",
+      "train_file": "cat_03741.png",
       "horizontal_flip": true,
-      "rgb_mse": 0.1297004669904709
+      "rgb_mse": 0.11578265577554703
     },
     {
       "tile": 15,
-      "train_file": "cat_01151.png",
+      "train_file": "cat_04219.png",
       "horizontal_flip": true,
-      "rgb_mse": 0.17513012886047363
+      "rgb_mse": 0.15953649580478668
     },
     {
       "tile": 16,
       "train_file": "cat_02988.png",
       "horizontal_flip": true,
-      "rgb_mse": 0.13190187513828278
+      "rgb_mse": 0.13527914881706238
     }
   ]
 }

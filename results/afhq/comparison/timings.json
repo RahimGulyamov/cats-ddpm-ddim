@@ -1,8 +1,8 @@
 {
-  "checkpoint": "experiments/afhq128-gpu/snapshots/step-0010000.pt",
-  "checkpoint_sha256": "7a0b214ddef2716051e87b3d1c58f9460e1b11225fb0f0114c76c6aa98511d7d",
-  "epoch": 69,
-  "optimizer_updates": 10000,
+  "checkpoint": "experiments/afhq128-gpu/snapshots/step-0050000.pt",
+  "checkpoint_sha256": "8167181e0e115bad73232e10075fc6e4cff0055f8a7a687c22174e0624749ca1",
+  "epoch": 349,
+  "optimizer_updates": 50000,
   "seed": 2026,
   "weights": "ema",
   "precision": "float32",
@@ -81,34 +81,34 @@
   "measurement": "Wall time after warmup; synchronized device; identical initial CPU noise; includes model calls, scheduler and DDPM reverse-noise transfers; excludes checkpoint loading, final CPU transfer and artifact encoding.",
   "durations": {
     "ddpm-1000": [
-      25.550915534142405,
-      25.690447027795017,
-      25.722666651010513
+      25.591205197852105,
+      25.6793668018654,
+      25.703653947915882
     ],
     "ddim-50": [
-      1.2734738700091839,
-      1.2728442889638245,
-      1.2736752182245255
+      1.275564500130713,
+      1.2757226643152535,
+      1.2756660040467978
     ],
     "ddim-100": [
-      2.5466673099435866,
-      2.5483216550201178,
-      2.5503081870265305
+      2.550572090782225,
+      2.5504993526265025,
+      2.552868847269565
     ],
     "ddim-200": [
-      5.102099728770554,
-      5.105196164920926,
-      5.102107779122889
+      5.105212575756013,
+      5.106889852788299,
+      5.105940364766866
     ],
     "ddim-500": [
-      12.76643540803343,
-      12.775068820919842,
-      12.784094376955181
+      12.735845047980547,
+      12.741051876917481,
+      12.744688211008906
     ],
     "ddim-1000": [
-      25.577864679973572,
-      25.592335000168532,
-      25.604445294942707
+      25.500232932157815,
+      25.531999428756535,
+      25.581760990899056
     ]
   },
   "results": [
@@ -117,9 +117,9 @@
       "steps": 1000,
       "images": 8,
       "repeats": 3,
-      "mean_seconds": 25.65467640431598,
-      "std_seconds": 0.09129219388545781,
-      "seconds_per_image": 3.2068345505394973,
+      "mean_seconds": 25.658075315877795,
+      "std_seconds": 0.05917073499118198,
+      "seconds_per_image": 3.2072594144847244,
       "speedup_vs_ddpm": 1.0
     },
     {
@@ -127,50 +127,50 @@
       "steps": 50,
       "images": 8,
       "repeats": 3,
-      "mean_seconds": 1.2733311257325113,
-      "std_seconds": 0.0004334660372674442,
-      "seconds_per_image": 0.1591663907165639,
-      "speedup_vs_ddpm": 20.147686556831452
+      "mean_seconds": 1.2756510561642547,
+      "std_seconds": 8.013461619194792e-05,
+      "seconds_per_image": 0.15945638202053183,
+      "speedup_vs_ddpm": 20.113709930228776
     },
     {
       "method": "ddim",
       "steps": 100,
       "images": 8,
       "repeats": 3,
-      "mean_seconds": 2.548432383996745,
-      "std_seconds": 0.0018229624688882735,
-      "seconds_per_image": 0.31855404799959314,
-      "speedup_vs_ddpm": 10.066846020878671
+      "mean_seconds": 2.5513134302260974,
+      "std_seconds": 0.0013475215561006976,
+      "seconds_per_image": 0.31891417877826217,
+      "speedup_vs_ddpm": 10.056810351836692
     },
     {
       "method": "ddim",
       "steps": 200,
       "images": 8,
       "repeats": 3,
-      "mean_seconds": 5.10313455760479,
-      "std_seconds": 0.0017854088457558968,
-      "seconds_per_image": 0.6378918197005987,
-      "speedup_vs_ddpm": 5.027238869507151
+      "mean_seconds": 5.10601426443706,
+      "std_seconds": 0.0008410769475496962,
+      "seconds_per_image": 0.6382517830546325,
+      "speedup_vs_ddpm": 5.025069258929422
     },
     {
       "method": "ddim",
       "steps": 500,
       "images": 8,
       "repeats": 3,
-      "mean_seconds": 12.775199535302818,
-      "std_seconds": 0.008830210106915785,
-      "seconds_per_image": 1.5968999419128522,
-      "speedup_vs_ddpm": 2.0081624818009445
+      "mean_seconds": 12.740528378635645,
+      "std_seconds": 0.0044447633148290405,
+      "seconds_per_image": 1.5925660473294556,
+      "speedup_vs_ddpm": 2.0138941300820257
     },
     {
       "method": "ddim",
       "steps": 1000,
       "images": 8,
       "repeats": 3,
-      "mean_seconds": 25.59154832502827,
-      "std_seconds": 0.013307757751273176,
-      "seconds_per_image": 3.198943540628534,
-      "speedup_vs_ddpm": 1.0024667549804311
+      "mean_seconds": 25.5379977839378,
+      "std_seconds": 0.04109368916499603,
+      "seconds_per_image": 3.192249722992225,
+      "speedup_vs_ddpm": 1.0047019164523352
     }
   ]
 }

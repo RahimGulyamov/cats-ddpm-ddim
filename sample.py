@@ -15,7 +15,7 @@ def positive(value):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--checkpoint", type=Path, default=Path("checkpoints/afhq128-step10000.pt"))
+    parser.add_argument("--checkpoint", type=Path, default=Path("checkpoints/afhq128-step50000.pt"))
     parser.add_argument("--method", choices=("ddpm", "ddim"), default="ddim")
     parser.add_argument("--steps", type=positive, default=100)
     parser.add_argument("--count", type=positive, default=8)

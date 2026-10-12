@@ -28,13 +28,18 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--archive", type=Path, required=True)
     parser.add_argument("--data-archive", type=Path, required=True)
+    parser.add_argument("--updates", type=int, default=50000)
+    parser.add_argument("--release-tag", default="submission-v3")
     args = parser.parse_args()
+    if args.updates < 1 or args.updates % 2000:
+        parser.error("--updates must be a positive multiple of the validation interval (2000)")
+    comparison_name = f"afhq-comparison-{args.updates}"
     with tempfile.TemporaryDirectory(prefix="afhq-results-") as temporary:
         incoming = Path(temporary)
         extract(args.archive, incoming)
         timings, checkpoint_sha = validate(
             incoming, ROOT / "configs/afhq128-gpu.yaml",
-            ROOT / "results/afhq/dataset-manifest.json", "afhq-comparison-10000", 2000)
+            ROOT / "results/afhq/dataset-manifest.json", comparison_name, 2000, args.updates)
         manifest = json.loads((ROOT / "results/afhq/dataset-manifest.json").read_text())
         split = json.loads((incoming / "split.json").read_text())
         if (split["total"], split["training"], split["validation"]) != (5065, 4559, 506):
@@ -51,7 +56,7 @@ def main():
                 digest.update(image_sha)
             if digest.hexdigest() != split["sha256"]:
                 raise ValueError("Prepared dataset checksum mismatch")
-        comparison = incoming / "afhq-comparison-10000"
+        comparison = incoming / comparison_name
         if not (comparison / "demo.mp4").exists():
             ffmpeg = shutil.which("ffmpeg")
             if ffmpeg is None:
@@ -67,19 +72,24 @@ def main():
                      "split.json", "events.jsonl", "training-dashboard.png"):
             shutil.copy2(incoming / name, training / name)
         for name in ("previews", "tensorboard"):
-            shutil.copytree(incoming / name, training / name, dirs_exist_ok=True)
-        shutil.copytree(comparison, output / "comparison", dirs_exist_ok=True)
-        weights = ROOT / "checkpoints/afhq128-step10000.pt"
+            if (training / name).exists():
+                shutil.rmtree(training / name)
+            shutil.copytree(incoming / name, training / name)
+        if (output / "comparison").exists():
+            shutil.rmtree(output / "comparison")
+        shutil.copytree(comparison, output / "comparison")
+        weights = ROOT / f"checkpoints/afhq128-step{args.updates}.pt"
         weights.parent.mkdir(exist_ok=True)
-        shutil.copy2(incoming / "step-0010000.pt", weights)
+        shutil.copy2(incoming / f"step-{args.updates:07d}.pt", weights)
         data_asset = weights.parent / "diffusion-afhq-data.zip"
         shutil.copy2(args.data_archive, data_asset)
         assets = {
             "checkpoint": {"file": weights.name, "sha256": checkpoint_sha, "bytes": weights.stat().st_size,
-                           "optimizer_updates": 10000, "weights": "EMA", "dataset_sha256": split["sha256"]},
+                           "optimizer_updates": args.updates, "weights": "EMA", "dataset_sha256": split["sha256"]},
             "dataset": {"file": data_asset.name, "sha256": sha256(data_asset), "bytes": data_asset.stat().st_size,
                         "images": manifest["count"], "images_sha256": split["sha256"]},
-            "distribution": "GitHub Release submission-v2",
+            "release_tag": args.release_tag,
+            "distribution": f"GitHub Release {args.release_tag}",
         }
         (output / "assets.json").write_text(json.dumps(assets, indent=2))
         with (training / "train.csv").open() as handle:

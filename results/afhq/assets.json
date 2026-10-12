@@ -1,9 +1,9 @@
 {
   "checkpoint": {
-    "file": "afhq128-step10000.pt",
-    "sha256": "7a0b214ddef2716051e87b3d1c58f9460e1b11225fb0f0114c76c6aa98511d7d",
+    "file": "afhq128-step50000.pt",
+    "sha256": "8167181e0e115bad73232e10075fc6e4cff0055f8a7a687c22174e0624749ca1",
     "bytes": 314816431,
-    "optimizer_updates": 10000,
+    "optimizer_updates": 50000,
     "weights": "EMA",
     "dataset_sha256": "c91e0118c8d8b54b691fb546b3184a19be8b0c7b6b639a0d64ce866a04f0ac3a"
   },
@@ -14,5 +14,6 @@
     "images": 5065,
     "images_sha256": "c91e0118c8d8b54b691fb546b3184a19be8b0c7b6b639a0d64ce866a04f0ac3a"
   },
-  "distribution": "GitHub Release submission-v2"
+  "release_tag": "submission-v3",
+  "distribution": "GitHub Release submission-v3"
 }

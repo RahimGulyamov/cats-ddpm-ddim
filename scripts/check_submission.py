@@ -15,6 +15,7 @@ def main():
     args = parser.parse_args()
     errors = []
     af_hq = (ROOT / "results/afhq/assets.json").is_file()
+    assets = json.loads((ROOT / "results/afhq/assets.json").read_text()) if af_hq else None
     required = ["results/comparison/timings.json", "results/comparison/timings.csv",
                 "results/comparison/demo.mp4", "results/comparison/demo.gif", "results/checkpoint.json",
                 "results/training/events.jsonl", "results/training/environment.json",
@@ -24,7 +25,7 @@ def main():
                          "results/afhq/comparison/demo.mp4", "results/afhq/comparison/demo.gif",
                          "results/afhq/training/train.csv", "results/afhq/training/validation.csv",
                          "results/afhq/training/loss.png", "results/afhq/training/split.json",
-                         "checkpoints/afhq128-step10000.pt"])
+                         f"checkpoints/{assets['checkpoint']['file']}"])
         if args.release_assets:
             required.append("checkpoints/diffusion-afhq-data.zip")
     else:
@@ -59,8 +60,7 @@ def main():
     if len(rows) != 10000 or int(rows[-1]["step"]) != 10000:
         raise SystemExit("Expected 10,000 actual training updates")
     if af_hq:
-        assets = json.loads((ROOT / "results/afhq/assets.json").read_text())
-        check_asset(ROOT / "checkpoints/afhq128-step10000.pt", assets["checkpoint"])
+        check_asset(ROOT / "checkpoints" / assets["checkpoint"]["file"], assets["checkpoint"])
         if args.release_assets:
             check_asset(ROOT / "checkpoints/diffusion-afhq-data.zip", assets["dataset"])
         timings = json.loads((ROOT / "results/afhq/comparison/timings.json").read_text())
@@ -70,8 +70,17 @@ def main():
             raise SystemExit("AFHQ comparison dataset differs from the release asset")
         with (ROOT / "results/afhq/training/train.csv").open() as handle:
             history = list(csv.DictReader(handle))
-        if [int(row["step"]) for row in history] != list(range(1, 10001)):
+        updates = assets["checkpoint"]["optimizer_updates"]
+        if [int(row["step"]) for row in history] != list(range(1, updates + 1)):
             raise SystemExit("Incomplete AFHQ training history")
+        summary = json.loads((ROOT / "results/afhq/training/summary.json").read_text())
+        if summary["updates"] != updates or timings["optimizer_updates"] != updates:
+            raise SystemExit("AFHQ summary, benchmark and weights report different training updates")
+        with (ROOT / "results/afhq/training/validation.csv").open() as handle:
+            validation = list(csv.DictReader(handle))
+        interval = timings["training_config"]["training"]["validate_every"]
+        if [int(row["step"]) for row in validation] != list(range(interval, updates + 1, interval)):
+            raise SystemExit("Incomplete AFHQ validation history")
     print("PASS: training logs, measured timings, video, weights and README links")
 
 

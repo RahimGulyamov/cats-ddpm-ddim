@@ -1,9 +1,9 @@
 {
-  "optimizer_updates": 10000,
-  "train_mse_last": 0.010179002818404115,
-  "train_mse_last1000_mean": 0.02073175179942541,
-  "examples_seen": 320000,
-  "epoch_equivalent": 70.19083132265848,
+  "optimizer_updates": 50000,
+  "train_mse_last": 0.018682821715174214,
+  "train_mse_last1000_mean": 0.01835307004261216,
+  "examples_seen": 1600000,
+  "epoch_equivalent": 350.9541566132924,
   "validation_curve": [
     {
       "step": 2000,
@@ -24,6 +24,86 @@
     {
       "step": 10000,
       "noise_mse": 0.09420561827497687
+    },
+    {
+      "step": 12000,
+      "noise_mse": 0.09360405161217356
+    },
+    {
+      "step": 14000,
+      "noise_mse": 0.09329891760549935
+    },
+    {
+      "step": 16000,
+      "noise_mse": 0.0928419184428043
+    },
+    {
+      "step": 18000,
+      "noise_mse": 0.0925347667881622
+    },
+    {
+      "step": 20000,
+      "noise_mse": 0.09231269509329967
+    },
+    {
+      "step": 22000,
+      "noise_mse": 0.09202962786251252
+    },
+    {
+      "step": 24000,
+      "noise_mse": 0.09176721595157909
+    },
+    {
+      "step": 26000,
+      "noise_mse": 0.0916303715878541
+    },
+    {
+      "step": 28000,
+      "noise_mse": 0.09145445037371609
+    },
+    {
+      "step": 30000,
+      "noise_mse": 0.09125031575711864
+    },
+    {
+      "step": 32000,
+      "noise_mse": 0.09112727128105462
+    },
+    {
+      "step": 34000,
+      "noise_mse": 0.09105151365077557
+    },
+    {
+      "step": 36000,
+      "noise_mse": 0.09092218203409598
+    },
+    {
+      "step": 38000,
+      "noise_mse": 0.09086277647422483
+    },
+    {
+      "step": 40000,
+      "noise_mse": 0.0907756395229722
+    },
+    {
+      "step": 42000,
+      "noise_mse": 0.09071724379745608
+    },
+    {
+      "step": 44000,
+      "noise_mse": 0.09067916422961113
+    },
+    {
+      "step": 46000,
+      "noise_mse": 0.09065899796261885
+    },
+    {
+      "step": 48000,
+      "noise_mse": 0.09065216856689706
+    },
+    {
+      "step": 50000,
+      "noise_mse": 0.09064481552927617
     }
   ],
   "note": "Train: raw weights/random t; validation: EMA/fixed t. MSE values across datasets are not directly comparable."

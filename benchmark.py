@@ -19,7 +19,7 @@ from sample import positive
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--checkpoint", type=Path, default=Path("checkpoints/afhq128-step10000.pt"))
+    parser.add_argument("--checkpoint", type=Path, default=Path("checkpoints/afhq128-step50000.pt"))
     parser.add_argument("--ddim-steps", nargs="+", type=positive, default=[50, 100, 200, 500, 1000])
     parser.add_argument("--count", type=positive, default=8)
     parser.add_argument("--repeats", type=positive, default=3)
