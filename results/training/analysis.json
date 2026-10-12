@@ -1,0 +1,18 @@
+{
+  "updates": 10000,
+  "last_update": 10000,
+  "train_images": 144,
+  "validation_images": 16,
+  "best_validation_step": 3000,
+  "best_validation_noise_mse": 0.0770716401550869,
+  "last_validation_noise_mse": 0.08795761198312643,
+  "validation_increase_from_minimum_percent": 14.124484448669206,
+  "last_train_noise_mse": 0.002519116237408525,
+  "last_1000_train_noise_mse_mean": 0.010214011082303614,
+  "epoch_equivalent": 2222.222222222222,
+  "quality_observations": {
+    "ddpm": "Recognizable, detailed cats; several close reproductions of train photographs.",
+    "ddim100": "Recognizable cats; color casts and grain.",
+    "limitation": "Small dataset, 16-image holdout; noise MSE is not a generation-quality metric. FID not computed."
+  }
+}

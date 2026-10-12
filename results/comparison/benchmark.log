@@ -1,0 +1,19 @@
+DDPM 1000: repeat 1/3, 25.637s
+DDPM 1000: repeat 2/3, 25.741s
+DDPM 1000: repeat 3/3, 25.764s
+DDIM 50: repeat 1/3, 1.278s
+DDIM 50: repeat 2/3, 1.278s
+DDIM 50: repeat 3/3, 1.278s
+DDIM 100: repeat 1/3, 2.558s
+DDIM 100: repeat 2/3, 2.557s
+DDIM 100: repeat 3/3, 2.558s
+DDIM 200: repeat 1/3, 5.116s
+DDIM 200: repeat 2/3, 5.119s
+DDIM 200: repeat 3/3, 5.119s
+DDIM 500: repeat 1/3, 12.808s
+DDIM 500: repeat 2/3, 12.815s
+DDIM 500: repeat 3/3, 12.822s
+DDIM 1000: repeat 1/3, 25.668s
+DDIM 1000: repeat 2/3, 25.684s
+DDIM 1000: repeat 3/3, 25.689s
+GIF created; install ffmpeg to also create MP4

@@ -1,0 +1,38 @@
+seed: 2026
+data_dir: data/cats
+output_dir: experiments/ddp-smoke
+image_size: 16
+val_fraction: 0.1
+device: cpu
+cpu_threads: 2
+model:
+  architecture: quality_unet
+  base_channels: 8
+  channel_multipliers: [1, 2]
+  blocks_per_level: 2
+  attention_levels: [1]
+  attention_heads: 2
+  dropout: 0.1
+  gradient_checkpointing: true
+diffusion:
+  timesteps: 20
+  schedule: linear
+training:
+  max_updates: 6
+  batch_size_per_gpu: 2
+  accumulation_steps: 2
+  precision: fp32
+  learning_rate: 0.0001
+  warmup_updates: 2
+  ema_decay: 0.99
+  log_every: 1
+  validate_every: 3
+  checkpoint_every: 3
+  snapshot_every: 6
+  preview_every: 3
+  ddpm_preview_every: 6
+  preview_steps: 5
+  preview_count: 4
+  tensorboard: true
+  min_snr_gamma: null
+  validation_levels: [0, 10, 19]

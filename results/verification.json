@@ -1,0 +1,25 @@
+{
+  "unit_tests": {
+    "count": 14,
+    "result": "PASS"
+  },
+  "cpu_exact_resume": "PASS: raw/EMA weights, dropout, accumulation, histories",
+  "trained_checkpoint_loading": "PASS: 78,642,819 parameters, optimizer update 10000",
+  "dataset_and_split": "PASS: exact match to checkpoint metadata",
+  "trained_checkpoint_cpu_sampling": "PASS: 2 DDIM transitions, finite RGB 128x128 output",
+  "benchmark": "PASS: actual GPU repeats, means/std/speedups and checkpoint SHA256 verified",
+  "demo": "PASS: 51 GIF frames, H.264/yuv420p MP4, 1066x306, 9.69 seconds",
+  "readme_links": "PASS: local targets exist",
+  "local_verification_environment": {
+    "python": "3.10",
+    "torch": "2.9.0",
+    "device": "cpu"
+  },
+  "training_and_benchmark_environment": {
+    "python": "3.10.12",
+    "torch": "2.9.1+cu128",
+    "training_gpus": 4,
+    "benchmark_gpus": 1,
+    "gpu": "NVIDIA A100 80GB PCIe"
+  }
+}

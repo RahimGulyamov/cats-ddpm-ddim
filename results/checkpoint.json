@@ -1,0 +1,8 @@
+{
+  "file": "cats128-step10000.pt",
+  "weights": "EMA",
+  "optimizer_updates": 10000,
+  "sha256": "701b71eae3fffa541640510e9db1b744d5b9353729256d6d634eb2cc13d0de36",
+  "dataset_sha256": "f50fc17c2281efbaffc30b11063bc93dbf80a47aca29f122c51193a0e8db5495",
+  "distribution": "GitHub Release submission-v1"
+}

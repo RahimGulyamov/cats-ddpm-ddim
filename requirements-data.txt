@@ -1,0 +1,2 @@
+# Only needed to download the original dataset again; PNGs are included in the repo.
+pyarrow==23.0.1

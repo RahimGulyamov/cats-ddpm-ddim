@@ -1,0 +1,176 @@
+{
+  "checkpoint": "experiments/cats128-gpu/snapshots/step-0010000.pt",
+  "checkpoint_sha256": "701b71eae3fffa541640510e9db1b744d5b9353729256d6d634eb2cc13d0de36",
+  "epoch": 2000,
+  "optimizer_updates": 10000,
+  "seed": 2026,
+  "weights": "ema",
+  "precision": "float32",
+  "training_config": {
+    "seed": 2026,
+    "data_dir": "data/cats",
+    "output_dir": "experiments/cats128-gpu",
+    "image_size": 128,
+    "val_fraction": 0.1,
+    "device": "cuda",
+    "cpu_threads": 4,
+    "model": {
+      "architecture": "quality_unet",
+      "base_channels": 128,
+      "channel_multipliers": [
+        1,
+        1,
+        2,
+        3,
+        4
+      ],
+      "blocks_per_level": 2,
+      "attention_levels": [
+        3,
+        4
+      ],
+      "attention_heads": 8,
+      "dropout": 0.1,
+      "gradient_checkpointing": true
+    },
+    "diffusion": {
+      "timesteps": 1000,
+      "schedule": "linear"
+    },
+    "training": {
+      "max_updates": 50000,
+      "batch_size_per_gpu": 8,
+      "accumulation_steps": 1,
+      "precision": "bf16",
+      "learning_rate": 0.0001,
+      "warmup_updates": 1000,
+      "ema_decay": 0.999,
+      "log_every": 50,
+      "validate_every": 1000,
+      "checkpoint_every": 1000,
+      "snapshot_every": 10000,
+      "preview_every": 1000,
+      "ddpm_preview_every": 5000,
+      "preview_steps": 100,
+      "preview_count": 16,
+      "tensorboard": true,
+      "min_snr_gamma": null,
+      "validation_levels": [
+        0,
+        100,
+        250,
+        500,
+        750,
+        900,
+        999
+      ]
+    }
+  },
+  "dataset_sha256": "f50fc17c2281efbaffc30b11063bc93dbf80a47aca29f122c51193a0e8db5495",
+  "resolution": 128,
+  "hardware": {
+    "device": "cuda",
+    "processor": "x86_64",
+    "system": "Linux-5.14.0-284.30.1.el9_2.x86_64-x86_64-with-glibc2.35",
+    "python": "3.10.12",
+    "torch": "2.9.1+cu128",
+    "threads": 4,
+    "gpu": "NVIDIA A100 80GB PCIe"
+  },
+  "ddim_eta": 0.0,
+  "measurement": "Wall time after warmup; synchronized device; identical initial CPU noise; includes model calls, scheduler and DDPM reverse-noise transfers; excludes checkpoint loading, final CPU transfer and artifact encoding.",
+  "durations": {
+    "ddpm-1000": [
+      25.63716162694618,
+      25.741153174545616,
+      25.76376635627821
+    ],
+    "ddim-50": [
+      1.2777390261180699,
+      1.2778947101905942,
+      1.2784677483141422
+    ],
+    "ddim-100": [
+      2.558068331796676,
+      2.556979625020176,
+      2.557729430962354
+    ],
+    "ddim-200": [
+      5.115732050035149,
+      5.118958313949406,
+      5.118995869997889
+    ],
+    "ddim-500": [
+      12.80751654598862,
+      12.815458035096526,
+      12.822483808733523
+    ],
+    "ddim-1000": [
+      25.66829171171412,
+      25.684360597282648,
+      25.688720151782036
+    ]
+  },
+  "results": [
+    {
+      "method": "ddpm",
+      "steps": 1000,
+      "images": 8,
+      "repeats": 3,
+      "mean_seconds": 25.71402705259,
+      "std_seconds": 0.0675208059902445,
+      "seconds_per_image": 3.21425338157375,
+      "speedup_vs_ddpm": 1.0
+    },
+    {
+      "method": "ddim",
+      "steps": 50,
+      "images": 8,
+      "repeats": 3,
+      "mean_seconds": 1.278033828207602,
+      "std_seconds": 0.0003837634385324933,
+      "seconds_per_image": 0.15975422852595025,
+      "speedup_vs_ddpm": 20.11998938138674
+    },
+    {
+      "method": "ddim",
+      "steps": 100,
+      "images": 8,
+      "repeats": 3,
+      "mean_seconds": 2.557592462593069,
+      "std_seconds": 0.0005571273300939533,
+      "seconds_per_image": 0.3196990578241336,
+      "speedup_vs_ddpm": 10.053997041623784
+    },
+    {
+      "method": "ddim",
+      "steps": 200,
+      "images": 8,
+      "repeats": 3,
+      "mean_seconds": 5.117895411327481,
+      "std_seconds": 0.001873619938799229,
+      "seconds_per_image": 0.6397369264159352,
+      "speedup_vs_ddpm": 5.024336174529266
+    },
+    {
+      "method": "ddim",
+      "steps": 500,
+      "images": 8,
+      "repeats": 3,
+      "mean_seconds": 12.815152796606222,
+      "std_seconds": 0.0074882986332488475,
+      "seconds_per_image": 1.6018940995757778,
+      "speedup_vs_ddpm": 2.00653300516243
+    },
+    {
+      "method": "ddim",
+      "steps": 1000,
+      "images": 8,
+      "repeats": 3,
+      "mean_seconds": 25.68045748692627,
+      "std_seconds": 0.01075899594491438,
+      "seconds_per_image": 3.2100571858657836,
+      "speedup_vs_ddpm": 1.0013072027895462
+    }
+  ]
+}
