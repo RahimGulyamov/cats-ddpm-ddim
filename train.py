@@ -7,7 +7,7 @@ from train_distributed import run
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--config", type=Path, default=Path("configs/train.yaml"))
+    parser.add_argument("--config", type=Path, default=Path("configs/afhq128-gpu.yaml"))
     parser.add_argument("--resume", type=Path)
     parser.add_argument("--output", type=Path)
     parser.add_argument("--device", choices=("auto", "cpu", "cuda"))

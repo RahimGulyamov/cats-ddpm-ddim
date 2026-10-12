@@ -24,24 +24,27 @@ def sha256(path):
     return digest.hexdigest()
 
 
-def validate(directory):
+def validate(directory, config_path=None, manifest_path=None,
+             comparison_name="submission-comparison", validation_every=1000):
+    config_path = config_path or ROOT / "configs/train.yaml"
+    manifest_path = manifest_path or ROOT / "data/cats/manifest.json"
     expected = ["train.csv", "validation.csv", "summary.json", "config.yaml", "environment.json",
                 "split.json", "events.jsonl", "training-dashboard.png", "step-0010000.pt",
-                "submission-comparison/timings.json", "submission-comparison/timings.csv",
-                "submission-comparison/contact-sheet.png", "submission-comparison/speed.png",
-                "submission-comparison/demo.gif"]
+                f"{comparison_name}/timings.json", f"{comparison_name}/timings.csv",
+                f"{comparison_name}/contact-sheet.png", f"{comparison_name}/speed.png",
+                f"{comparison_name}/demo.gif"]
     for name in expected:
         if not (directory / name).is_file():
             raise ValueError(f"Missing pod artifact: {name}")
     summary = json.loads((directory / "summary.json").read_text())
     config = yaml.safe_load((directory / "config.yaml").read_text())
     split = json.loads((directory / "split.json").read_text())
-    timings = json.loads((directory / "submission-comparison/timings.json").read_text())
-    if config != yaml.safe_load((ROOT / "configs/train.yaml").read_text()):
+    timings = json.loads((directory / comparison_name / "timings.json").read_text())
+    if config != yaml.safe_load(config_path.read_text()):
         raise ValueError("Pod training configuration differs from the submitted configuration")
     if timings["training_config"] != config or timings["dataset_sha256"] != split["sha256"]:
         raise ValueError("Benchmark belongs to a different configuration or dataset")
-    manifest = json.loads((ROOT / "data/cats/manifest.json").read_text())
+    manifest = json.loads(manifest_path.read_text())
     if split["sha256"] != manifest["images_sha256"]:
         raise ValueError("Pod dataset differs from the images included in the repository")
     if timings["precision"] != "float32" or timings["ddim_eta"] != 0 or timings["seed"] != 2026:
@@ -57,7 +60,7 @@ def validate(directory):
         validation = list(csv.DictReader(handle))
     if [int(r["step"]) for r in training] != list(range(1, 10001)):
         raise ValueError("Expected complete training history from updates 1 through 10,000")
-    if [int(r["step"]) for r in validation] != list(range(1000, 10001, 1000)):
+    if [int(r["step"]) for r in validation] != list(range(validation_every, 10001, validation_every)):
         raise ValueError("Validation history does not match the experiment")
     for rows in (training, validation):
         if any(not math.isfinite(float(value)) for row in rows for value in row.values()):
@@ -80,7 +83,7 @@ def validate(directory):
             raise ValueError("Timing standard deviation differs from its measured repeats")
         if not math.isclose(row["speedup_vs_ddpm"], timings["results"][0]["mean_seconds"] / row["mean_seconds"], rel_tol=1e-9):
             raise ValueError("Reported speedup differs from measured generation times")
-        if not (directory / f"submission-comparison/{row['method']}-{row['steps']}.png").is_file():
+        if not (directory / comparison_name / f"{row['method']}-{row['steps']}.png").is_file():
             raise ValueError("Missing a benchmark sample grid")
     return timings, checkpoint_sha
 
@@ -111,6 +114,9 @@ def update_readme(timings):
         "python benchmark.py --checkpoint checkpoints/cats128-step10000.pt --ddim-steps 50 100 200 500 1000 --count 8 --repeats 3 --device cuda --demo --output results/comparison",
         "```", "", ""])
     path = ROOT / "README.md"
+    if (ROOT / "results/afhq/assets.json").exists():
+        path = ROOT / "docs/few-shot.md"
+        section = section.replace("](results/", "](../results/")
     text = path.read_text()
     start = text.index("## Сравнение DDPM и DDIM")
     end = text.index("## Анализ качества и выводы", start)

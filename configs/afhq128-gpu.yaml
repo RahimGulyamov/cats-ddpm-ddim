@@ -1,0 +1,52 @@
+seed: 2026
+data_dir: data/afhq-cat
+output_dir: experiments/afhq128-gpu
+image_size: 128
+val_fraction: 0.1
+device: cuda
+cpu_threads: 4
+model:
+  architecture: quality_unet
+  base_channels: 128
+  channel_multipliers:
+  - 1
+  - 1
+  - 2
+  - 3
+  - 4
+  blocks_per_level: 2
+  attention_levels:
+  - 3
+  - 4
+  attention_heads: 8
+  dropout: 0.1
+  gradient_checkpointing: true
+diffusion:
+  timesteps: 1000
+  schedule: linear
+training:
+  max_updates: 50000
+  batch_size_per_gpu: 8
+  accumulation_steps: 1
+  precision: bf16
+  learning_rate: 0.0001
+  warmup_updates: 1000
+  ema_decay: 0.999
+  log_every: 50
+  validate_every: 2000
+  checkpoint_every: 1000
+  snapshot_every: 10000
+  preview_every: 2000
+  ddpm_preview_every: 10000
+  preview_steps: 200
+  preview_count: 16
+  tensorboard: true
+  min_snr_gamma: null
+  validation_levels:
+  - 0
+  - 100
+  - 250
+  - 500
+  - 750
+  - 900
+  - 999

@@ -40,7 +40,7 @@ def read_preview(path, size, count, columns=4):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--grid", type=Path, required=True)
-    parser.add_argument("--config", type=Path, default=Path("configs/train.yaml"))
+    parser.add_argument("--config", type=Path, default=Path("configs/cats128-gpu.yaml"))
     parser.add_argument("--count", type=int, default=16)
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
@@ -51,15 +51,34 @@ def main():
     training, _, split = load_images(config["data_dir"], config["image_size"], config["seed"],
                                      config.get("val_fraction", 0.1))
     generated = read_preview(args.grid, config["image_size"], args.count)
-    bank = torch.cat((training, training.flip(-1)))
-    # Evaluate one image against the bank at a time to bound intermediate memory.
+    # Chunk the train bank and use squared-distance matrix products to avoid
+    # materializing [generated, train, channels, height, width] differences.
+    queries = generated.flatten(1)
+    query_norm = queries.square().sum(1, keepdim=True)
+    best_distance = torch.full((len(generated),), float("inf"))
+    best_neighbor = torch.zeros(len(generated), dtype=torch.long)
+    for flipped in (False, True):
+        for start in range(0, len(training), 128):
+            block = training[start:start + 128]
+            if flipped:
+                block = block.flip(-1)
+            flat = block.flatten(1)
+            distance = (query_norm + flat.square().sum(1)[None] - 2 * queries @ flat.T)
+            distance = (distance / queries.shape[1]).clamp_min(0)
+            values, indices = distance.min(1)
+            improved = values < best_distance
+            best_distance[improved] = values[improved]
+            best_neighbor[improved] = indices[improved] + start + int(flipped) * len(training)
     pairs, rows = [], []
     for index, image in enumerate(generated):
-        distance = (bank - image).square().mean((1, 2, 3))
-        neighbor = int(distance.argmin())
-        pairs.extend((image, bank[neighbor]))
+        neighbor = int(best_neighbor[index])
+        nearest = training[neighbor % len(training)]
+        if neighbor >= len(training):
+            nearest = nearest.flip(-1)
+        pairs.extend((image, nearest))
         rows.append({"tile": index + 1, "train_file": split["train_files"][neighbor % len(training)],
-                     "horizontal_flip": neighbor >= len(training), "rgb_mse": float(distance[neighbor])})
+                     "horizontal_flip": neighbor >= len(training),
+                     "rgb_mse": float((image - nearest).square().mean())})
     args.output.mkdir(parents=True, exist_ok=True)
     grid(torch.stack(pairs), columns=4, title="Generated / nearest TRAIN (including flips) | RGB MSE diagnostic")\
         .save(args.output / "neighbors.png")

@@ -1,0 +1,107 @@
+{
+  "source_grid": "results/afhq/training/previews/step-0010000-ddpm.png",
+  "dataset_sha256": "c91e0118c8d8b54b691fb546b3184a19be8b0c7b6b639a0d64ce866a04f0ac3a",
+  "train_count": 4559,
+  "generated_count": 16,
+  "normalization": "RGB in [-1,1]; native preview quantized to uint8",
+  "median_nearest_train_rgb_mse": 0.14035973697900772,
+  "limitations": "Pixel proximity supports visual inspection; no copy threshold or FID. Colors and alignment affect distances. Both original and flipped train images checked.",
+  "pairs": [
+    {
+      "tile": 1,
+      "train_file": "cat_02098.png",
+      "horizontal_flip": true,
+      "rgb_mse": 0.14792729914188385
+    },
+    {
+      "tile": 2,
+      "train_file": "cat_01417.png",
+      "horizontal_flip": false,
+      "rgb_mse": 0.12909258902072906
+    },
+    {
+      "tile": 3,
+      "train_file": "cat_00749.png",
+      "horizontal_flip": false,
+      "rgb_mse": 0.14244189858436584
+    },
+    {
+      "tile": 4,
+      "train_file": "cat_00594.png",
+      "horizontal_flip": false,
+      "rgb_mse": 0.1528291404247284
+    },
+    {
+      "tile": 5,
+      "train_file": "cat_00215.png",
+      "horizontal_flip": true,
+      "rgb_mse": 0.20353670418262482
+    },
+    {
+      "tile": 6,
+      "train_file": "cat_01879.png",
+      "horizontal_flip": true,
+      "rgb_mse": 0.13343079388141632
+    },
+    {
+      "tile": 7,
+      "train_file": "cat_02600.png",
+      "horizontal_flip": true,
+      "rgb_mse": 0.1829654425382614
+    },
+    {
+      "tile": 8,
+      "train_file": "cat_03850.png",
+      "horizontal_flip": false,
+      "rgb_mse": 0.1382775753736496
+    },
+    {
+      "tile": 9,
+      "train_file": "cat_04817.png",
+      "horizontal_flip": true,
+      "rgb_mse": 0.11524277180433273
+    },
+    {
+      "tile": 10,
+      "train_file": "cat_03807.png",
+      "horizontal_flip": false,
+      "rgb_mse": 0.16800875961780548
+    },
+    {
+      "tile": 11,
+      "train_file": "cat_00568.png",
+      "horizontal_flip": false,
+      "rgb_mse": 0.13210447132587433
+    },
+    {
+      "tile": 12,
+      "train_file": "cat_02907.png",
+      "horizontal_flip": true,
+      "rgb_mse": 0.18233120441436768
+    },
+    {
+      "tile": 13,
+      "train_file": "cat_01666.png",
+      "horizontal_flip": false,
+      "rgb_mse": 0.12276475876569748
+    },
+    {
+      "tile": 14,
+      "train_file": "cat_01770.png",
+      "horizontal_flip": false,
+      "rgb_mse": 0.08049295097589493
+    },
+    {
+      "tile": 15,
+      "train_file": "cat_04304.png",
+      "horizontal_flip": true,
+      "rgb_mse": 0.17950962483882904
+    },
+    {
+      "tile": 16,
+      "train_file": "cat_02955.png",
+      "horizontal_flip": true,
+      "rgb_mse": 0.13209491968154907
+    }
+  ]
+}

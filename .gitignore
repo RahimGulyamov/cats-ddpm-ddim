@@ -11,3 +11,6 @@ checkpoints/
 *.zip
 *.part
 .ruff_cache/
+data/afhq-cat/
+data/afhq-cat
+downloads/

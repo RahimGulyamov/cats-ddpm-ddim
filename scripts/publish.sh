@@ -2,6 +2,9 @@
 set -euo pipefail
 
 cd "$(dirname "$0")/.."
+if [[ -f results/afhq/assets.json ]]; then
+  exec bash scripts/publish_afhq.sh
+fi
 repo_name="cats-ddpm-ddim"
 release_tag="submission-v1"
 task_python="${PYTHON_BIN:-python3}"

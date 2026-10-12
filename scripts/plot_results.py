@@ -1,4 +1,5 @@
 """Plot raw training CSV, a trailing 100-update mean and fixed-level validation."""
+import argparse
 import csv
 from pathlib import Path
 
@@ -12,7 +13,10 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def main():
-    folder = ROOT / "results/training"
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--folder", type=Path, default=ROOT / "results/training")
+    args = parser.parse_args()
+    folder = args.folder
     with (folder / "train.csv").open() as handle:
         training = list(csv.DictReader(handle))
     with (folder / "validation.csv").open() as handle:
@@ -32,7 +36,8 @@ def main():
                      label="Validation EMA / fixed t")
         best = int(np.argmin(val_loss))
         axes[0].annotate(f"Validation minimum: {val_steps[best]}",
-                         xy=(val_steps[best], val_loss[best]), xytext=(3700, 0.18),
+                         xy=(val_steps[best], val_loss[best]), xytext=(0.4, 0.48),
+                         textcoords="axes fraction",
                          arrowprops={"arrowstyle": "->", "color": "#c25f35"}, fontsize=9)
         axes[0].set(title="Noise prediction MSE", ylabel="MSE", yscale="log")
         axes[0].legend(fontsize=8, frameon=False, loc="upper right")

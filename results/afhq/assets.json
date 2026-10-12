@@ -1,0 +1,18 @@
+{
+  "checkpoint": {
+    "file": "afhq128-step10000.pt",
+    "sha256": "7a0b214ddef2716051e87b3d1c58f9460e1b11225fb0f0114c76c6aa98511d7d",
+    "bytes": 314816431,
+    "optimizer_updates": 10000,
+    "weights": "EMA",
+    "dataset_sha256": "c91e0118c8d8b54b691fb546b3184a19be8b0c7b6b639a0d64ce866a04f0ac3a"
+  },
+  "dataset": {
+    "file": "diffusion-afhq-data.zip",
+    "sha256": "bc96550821cfeab03deb4fa1a58719fe8f172cd890ee35f695009cff8fec3bee",
+    "bytes": 164952788,
+    "images": 5065,
+    "images_sha256": "c91e0118c8d8b54b691fb546b3184a19be8b0c7b6b639a0d64ce866a04f0ac3a"
+  },
+  "distribution": "GitHub Release submission-v2"
+}

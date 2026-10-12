@@ -1,0 +1,34 @@
+{
+  "unit_tests": {
+    "passed": 14,
+    "failed": 0
+  },
+  "checkpoint": {
+    "weights_only_load": true,
+    "real_cpu_ddim_transitions": 2,
+    "images": 1
+  },
+  "nearest_train_regression": {
+    "pairs": 16,
+    "identical_nearest_files_and_flips": true,
+    "max_rgb_mse_change": 1.4901161193847656e-08
+  },
+  "dataset": {
+    "prepared_images_checked_against_manifest": 5065,
+    "sha256_matches_training_split": true
+  },
+  "benchmark": {
+    "checkpoint_sha256_verified": true,
+    "training_config_verified": true,
+    "repeats_per_method": 3,
+    "methods": 6
+  },
+  "video": {
+    "codec": "h264",
+    "pixel_format": "yuv420p",
+    "width": 1066,
+    "height": 306,
+    "seconds": 9.69
+  },
+  "readme_relative_links": "checked by scripts/check_submission.py"
+}
